@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ItemsController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\TransaksiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,3 +23,6 @@ Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::post('/admin/add', [ItemsController::class, 'store'])->name('add_item');
+Route::get('/user/cart', [TransaksiController::class, 'index'])->name('user.cart');
+Route::get('/user/buys/{id}', [TransaksiController::class, 'buys'])->name('user.buy');
+Route::get('/user/cancel/{id}', [TransaksiController::class, 'destroy'])->name('user.cancel');

@@ -1,6 +1,7 @@
 @extends('layouts.tamplates')
 
 @section('content')
+
 <!-- Home -->
 
 <div class="home">
@@ -11,7 +12,8 @@
 
             <!-- Slide -->
             <div class="owl-item">
-                <div class="background_image" style="background-image:url(images/home_slider.jpg)"></div>
+                <div class="background_image" style="background-image:url({{ asset("images/about.jpg") }})">
+                </div>
                 <div class="home_slider_content_container">
                     <div class="container">
                         <div class="row">
@@ -66,12 +68,12 @@
         </div>
 
         {{-- <div class="home_page_nav">
-            <ul class="d-flex flex-column align-items-end justify-content-end">
-                <li><a href="#" data-scroll-to="#destinations">Offers<span>01</span></a></li>
-                <li><a href="#" data-scroll-to="#testimonials">Testimonials<span>02</span></a></li>
-                <li><a href="#" data-scroll-to="#news">Latest<span>03</span></a></li>
-            </ul>
-        </div> --}}
+                    <ul class="d-flex flex-column align-items-end justify-content-end">
+                        <li><a href="#" data-scroll-to="#destinations">Offers<span>01</span></a></li>
+                        <li><a href="#" data-scroll-to="#testimonials">Testimonials<span>02</span></a></li>
+                        <li><a href="#" data-scroll-to="#news">Latest<span>03</span></a></li>
+                    </ul>
+                </div> --}}
     </div>
 </div>
 
@@ -137,7 +139,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{$item->judul}}</h5>
                         <p class="card-text">RP.{{$item->harga}}</p>
-                        <a href="#" class="btn btn-primary">beli</a>
+                        <a href="{{ route('user.buy', ['id'=>$item->kd_brg]) }}" class="btn btn-primary">beli</a>
                     </div>
                 </div>
             </div>

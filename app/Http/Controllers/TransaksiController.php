@@ -2,19 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Items;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
 
 class TransaksiController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
-        //
+        $cart = session()->get('shop');
+        $data = [
+            'title' => 'User - Cart',
+            'shop' => $cart ?? [],
+            'books' => Items::all()
+        ];
+        return view('user.cart', $data);
     }
 
     /**
@@ -22,9 +29,44 @@ class TransaksiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function buys($id)
     {
-        //
+        $book = Items::where(['kd_brg' => $id])->get()[0];
+        if ($id == '' || !$book) {
+            return redirect()->back()->with('error', 'Tidak Ada Kode Buku yang Dimasukkan!!');
+        }
+
+        $cart = session()->get('shop');
+        if (!$cart) {
+            if ($book->stok > 0) {
+                $cart = [
+                    $id => [
+                        'nama' => $book->judul,
+                        'jumlah' => 1,
+                        'harga' => $book->harga,
+                        'gambar' => $book->gambar,
+                    ]
+                ];
+                session()->put('shop', $cart);
+                return redirect()->route('user.cart')->with('success', 'Buku telah Ditambahkan kedalam Keranjang!!');
+            } else {
+                return redirect()->back()->with('error', 'Stok Buku Kosong!!');
+            }
+        }
+
+        if (isset($cart[$id])) {
+            $cart[$id]['jumlah']++;
+            session()->put('shop', $cart);
+            return redirect()->route('user.cart')->with('success', 'Buku telah Ditambahkan kedalam Keranjang!!');
+        }
+        $cart[$id] = [
+            'nama' => $book->judul,
+            'jumlah' => 1,
+            'harga' => $book->harga,
+            'gambar' => $book->gambar,
+        ];
+        session()->put('shop', $cart);
+        return redirect()->route('user.cart')->with('success', 'Buku telah Ditambahkan kedalam Keranjang!!');
     }
 
     /**
@@ -78,8 +120,22 @@ class TransaksiController extends Controller
      * @param  \App\Models\Transaksi  $transaksi
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Transaksi $transaksi)
+    public function destroy($id)
     {
-        //
+        if (!$id) {
+            return redirect()->route('user.cart')->with('error', 'Tidak Ada Kode Buku yang Dimasukkan!!');
+        }
+
+        $cart = session()->get('shop');
+        if ($cart[$id]) {
+            $carts = [];
+            foreach ($cart as $key => $value) {
+                if ($key != intval($id)) {
+                    $carts[$key] = $value;
+                }
+            };
+            session()->put('shop', $carts);
+            return redirect()->back()->with('success', 'Buku telah Hapus dari Keranjang!!');
+        }
     }
 }

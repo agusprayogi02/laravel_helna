@@ -9,8 +9,11 @@
                         <div class="logo"><a>{{ config("app.name") }}</a></div>
                         <nav class="main_nav">
                             <ul class="d-flex flex-row align-items-start justify-content-start">
-                                <li class="active"><a href="index.html">Menu</a></li>
-                                <li><a href="#">Keranjang</a></li>
+                                <li class="{{ request()->is('home')?'active':'' }}"><a href="/home">Menu</a>
+                                </li>
+                                <li><a class="{{ request()->is('user/cart')?'active':'' }}"
+                                        href="{{ route('user.cart') }}">Keranjang</a>
+                                </li>
                                 {{-- <li><a href="#">Services</a></li>
                                 <li><a href="news.html">News</a></li>
                                 <li><a href="contact.html">Contact</a></li> --}}
