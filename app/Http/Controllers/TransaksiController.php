@@ -1,10 +1,12 @@
 <?php
 
+
 namespace App\Http\Controllers;
 
 use App\Models\Items;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TransaksiController extends Controller
 {
@@ -16,10 +18,17 @@ class TransaksiController extends Controller
     public function index()
     {
         $cart = session()->get('shop');
+        $total = 0;
+        if ($cart != null) {
+            foreach ($cart as $item) {
+                $total += $item['harga'] * $item['jumlah'];
+            }
+        }
         $data = [
             'title' => 'User - Cart',
             'shop' => $cart ?? [],
-            'books' => Items::all()
+            'books' => Items::all(),
+            'total' => $total
         ];
         return view('user.cart', $data);
     }
@@ -75,9 +84,28 @@ class TransaksiController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $req)
     {
-        //
+        $cart = session()->get('shop');
+        if ($cart) {
+            $kd_trans = "KD" . rand(0, 9999) . time();
+            foreach ($cart as $key => $item) {
+                $data = [
+                    'kd_transaksi' => $kd_trans,
+                    'kd_brg' => $key,
+                    'id' => Auth::user()->id,
+                    'alamat' => $req->alamat,
+                    'jumlah' => $item['jumlah'],
+                    'harga' => $item['harga'],
+                    'created_at' => now()
+                ];
+                Transaksi::insert($data);
+            }
+            session()->forget('shop');
+            return redirect()->back()->with("success", "Berhasil Melakukan Transaksi!!");
+        } else {
+            return redirect()->back()->with("error", "Tidak Ada Buku yang dibeli!!");
+        }
     }
 
     /**
