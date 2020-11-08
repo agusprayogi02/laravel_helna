@@ -15,11 +15,15 @@
             <p class="mb-0">{{ session('success') }}</p>
         </div>
         @endif
+        @auth
+        @if (Auth::user()->role == 1)
         <div class="text-right">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-book">
                 Tambah Buku
             </button>
         </div>
+        @endif
+        @endauth
         <div class="row">
 
             <div class="col text-center">
@@ -39,6 +43,11 @@
                         <h5 class="card-title">{{$item->judul}}</h5>
                         <p class="card-text">RP.{{$item->harga}}</p>
                         <a href="{{ route('user.buy', ['id'=>$item->kd_brg]) }}" class="btn btn-primary">beli</a>
+                        @auth
+                        @if (Auth::user()->role == 1)
+                        <a href="{{ route('user.buy', ['id'=>$item->kd_brg]) }}" class="btn btn-primary">Edit</a>
+                        @endif
+                        @endauth
                     </div>
                 </div>
             </div>

@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ItemsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TransaksiController;
-use App\Models\Transaksi;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,13 +17,20 @@ use App\Models\Transaksi;
 |
 */
 
+// user all
 Route::get('/', [HomeController::class, 'index'])->name('welcome');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Auth::routes();
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::post('/admin/add', [ItemsController::class, 'store'])->name('add_item');
-Route::get('/user/cart', [TransaksiController::class, 'index'])->name('user.cart');
-Route::get('/user/buys/{id}', [TransaksiController::class, 'buys'])->name('user.buy');
-Route::get('/user/cancel/{id}', [TransaksiController::class, 'destroy'])->name('user.cancel');
-Route::post('/user/store', [TransaksiController::class, 'store'])->name('user.beli');
+// user
+Route::post('/admin/add', [ItemsController::class, 'store'])->name('add_item')->middleware('isUser');
+Route::get('/user/cart', [TransaksiController::class, 'index'])->name('user.cart')->middleware('isUser');
+Route::get('/user/buys/{id}', [TransaksiController::class, 'buys'])->name('user.buy')->middleware('isUser');
+Route::get('/user/cancel/{id}', [TransaksiController::class, 'destroy'])->name('user.cancel')->middleware('isUser');
+Route::post('/user/store', [TransaksiController::class, 'store'])->name('user.beli')->middleware('isUser');
+Route::get('/user/histori', [TransaksiController::class, 'show'])->name('user.histori')->middleware('isUser');
+Route::get('/user/{id}/hapus', [TransaksiController::class, 'hapus'])->name('user.hapus')->middleware('isUser');
+
+// admin
+Route::get('/admin/pesanan', []);

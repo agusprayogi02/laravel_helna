@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Items;
 use App\Models\Transaksi;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -116,32 +117,12 @@ class TransaksiController extends Controller
      */
     public function show(Transaksi $transaksi)
     {
-        //
+        $data = [
+            'title' => "Histori Pembelian",
+            'data' => Transaksi::where('id', auth()->user()->id)->get()
+        ];
+        return view('user.history', $data);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Transaksi  $transaksi
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Transaksi $transaksi)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Transaksi  $transaksi
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Transaksi $transaksi)
-    {
-        //
-    }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -164,6 +145,14 @@ class TransaksiController extends Controller
             };
             session()->put('shop', $carts);
             return redirect()->back()->with('success', 'Buku telah Hapus dari Keranjang!!');
+        }
+    }
+
+    public function delete($id)
+    {
+        $item = Items::find($id);
+        if ($item) {
+        } else {
         }
     }
 }

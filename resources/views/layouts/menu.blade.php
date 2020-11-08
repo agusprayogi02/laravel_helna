@@ -11,12 +11,22 @@
                             <ul class="d-flex flex-row align-items-start justify-content-start">
                                 <li class="{{ request()->is('home')?'active':'' }}"><a href="/home">Menu</a>
                                 </li>
+                                @guest
                                 <li><a class="{{ request()->is('user/cart')?'active':'' }}"
                                         href="{{ route('user.cart') }}">Keranjang</a>
                                 </li>
-                                {{-- <li><a href="#">Services</a></li>
-                                <li><a href="news.html">News</a></li>
-                                <li><a href="contact.html">Contact</a></li> --}}
+                                @else
+                                @if (Auth::user()->role == 0)
+                                <li><a class="{{ request()->is('user/cart')?'active':'' }}"
+                                        href="{{ route('user.cart') }}">Keranjang</a>
+                                <li><a class="{{ request()->is('user/histori')?'active':'' }}"
+                                        href="{{ route('user.histori') }}">History</a>
+                                </li>
+                                @else
+                                <li><a class="{{ request()->is('user/cart')?'active':'' }}" href="#">Services</a></li>
+                                @endif
+                                @endguest
+
                                 @guest
                                 <li>
                                     <a href="{{ route('login') }}">{{ __('Login') }}</a>

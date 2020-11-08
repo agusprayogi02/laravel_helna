@@ -7,5 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Items extends Model
 {
-    use HasFactory;
+    protected $table = 'items';
+    protected $primaryKey = 'kd_brg';
+    protected $fillable = [
+        'judul',
+        'stok',
+        'harga',
+        'gambar',
+        'created_at'
+    ];
 }
