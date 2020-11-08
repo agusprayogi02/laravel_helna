@@ -103,7 +103,7 @@ class TransaksiController extends Controller
                 Transaksi::insert($data);
             }
             session()->forget('shop');
-            return redirect()->back()->with("success", "Berhasil Melakukan Transaksi!!");
+            return redirect()->route('user.histori')->with("success", "Berhasil Melakukan Transaksi!!");
         } else {
             return redirect()->back()->with("error", "Tidak Ada Buku yang dibeli!!");
         }

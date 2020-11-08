@@ -9,7 +9,7 @@
         <h4>Form Edit Item</h4>
       </div>
       <div class="card-body">
-        <form method="POST" enctype="multipart/form-data" action="{{ route('add_item') }}">
+        <form method="POST" enctype="multipart/form-data" action="{{ route('admin.update',['id'=>$items->kd_brg]) }}">
           {{ csrf_field() }}
           <div class="form-group row">
             <label for="staticEmail" class="col-sm-3 col-form-label h6">Judul novel</label>
@@ -60,7 +60,7 @@
             </div>
           </div>
           <div class="text-right">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <a href="{{ route('home') }}" class="btn btn-secondary">Batal</a>
             <button type="submit" class="btn btn-primary">Save</button>
           </div>
         </form>

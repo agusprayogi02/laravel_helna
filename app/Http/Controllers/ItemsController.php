@@ -53,7 +53,7 @@ class ItemsController extends Controller
         ];
         $create =  Items::insert($data);
         if ($create) {
-            return redirect()->route('home')->with('success', 'Berhasil Menambahkan Barang!');
+            return redirect()->route('home')->with('success', 'Berhasil Menambahkan Item Buku!');
         }
     }
 
@@ -89,9 +89,32 @@ class ItemsController extends Controller
      * @param  \App\Models\Items  $items
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Items $items)
+    public function update(Request $request, $id)
     {
-        //
+        $validatedData = $request->validate([
+            'judul' => 'required|max:255',
+            'harga' => 'required|numeric',
+            'stok' => 'required|numeric',
+        ]);
+        $book = Items::find($id);
+        if ($request->has('gambar')) {
+            $img = $request->file('gambar');
+            $fileName = "BOOK" . rand(0, 99999) . "IMG" . rand(0, 9999) . "." . $img->getClientOriginalExtension();
+            $img->move('image/', $fileName);
+        } else {
+            $fileName = $book->gambar;
+        }
+        $data = [
+            'judul' => $request->judul,
+            'harga' => $request->harga,
+            'stok' => $request->stok,
+            'gambar' => $fileName,
+            'created_at' => now()
+        ];
+        $upp = Items::where('kd_brg', $id)->update($data);
+        if ($upp) {
+            return redirect()->route('home')->with('success', 'Berhasil Mengubah Item Buku!');
+        }
     }
 
     /**

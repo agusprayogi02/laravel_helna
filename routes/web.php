@@ -35,4 +35,4 @@ Route::get('/user/{id}/hapus', [TransaksiController::class, 'hapus'])->name('use
 // admin
 Route::get('/admin/pesanan', []);
 Route::get('/admin/{id}/edit', [ItemsController::class, 'edit'])->name('admin.edit')->middleware('isAdmin');
-Route::get('/admin/{id}/update', [ItemsController::class, 'edit'])->name('admin.edit')->middleware('isAdmin');
+Route::post('/admin/{id}/update', [ItemsController::class, 'update'])->name('admin.update')->middleware('isAdmin');

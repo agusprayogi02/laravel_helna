@@ -46,7 +46,7 @@
                         <a href="{{ route('user.buy', ['id'=>$item->kd_brg]) }}" class="btn btn-primary">beli</a>
                         @else
                         @if (Auth::user()->role == 1)
-                        <a href="{{ route('user.buy', ['id'=>$item->kd_brg]) }}" class="btn btn-primary">Edit</a>
+                        <a href="{{ route('admin.edit', ['id'=>$item->kd_brg]) }}" class="btn btn-warning">Edit</a>
                         @else
                         <a href="{{ route('user.buy', ['id'=>$item->kd_brg]) }}" class="btn btn-primary">beli</a>
                         @endif
