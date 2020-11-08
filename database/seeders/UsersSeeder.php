@@ -17,8 +17,8 @@ class UsersSeeder extends Seeder
         DB::table('users')->insert(
             [
                 'name' => 'Helna Kurniawati',
-                'email' => 'helnakurniawati91@gmail.com',
-                'password' => password_hash("helnakurniawati", PASSWORD_DEFAULT),
+                'email' => 'helnakurniawati@gmail.com',
+                'password' => password_hash("sayang-1", PASSWORD_DEFAULT),
                 'role' => '1',
                 'created_at' => now()
             ]
@@ -27,7 +27,7 @@ class UsersSeeder extends Seeder
             [
                 'name' => 'Agus Prayogi',
                 'email' => 'agus21apy@gmail.com',
-                'password' => password_hash("agusprayogi", PASSWORD_DEFAULT),
+                'password' => password_hash("akubisa-1", PASSWORD_DEFAULT),
                 'role' => '0',
                 'created_at' => now()
             ]

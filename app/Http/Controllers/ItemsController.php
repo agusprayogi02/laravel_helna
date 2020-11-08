@@ -73,9 +73,13 @@ class ItemsController extends Controller
      * @param  \App\Models\Items  $items
      * @return \Illuminate\Http\Response
      */
-    public function edit(Items $items)
+    public function edit(Items $items, $id)
     {
-        //
+        $data = [
+            'items' => $items::find($id),
+            'title' => 'Edit Profile'
+        ];
+        return view('admin.edit', $data);
     }
 
     /**

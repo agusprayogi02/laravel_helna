@@ -42,12 +42,15 @@
                     <div class="card-body">
                         <h5 class="card-title">{{$item->judul}}</h5>
                         <p class="card-text">RP.{{$item->harga}}</p>
+                        @guest
                         <a href="{{ route('user.buy', ['id'=>$item->kd_brg]) }}" class="btn btn-primary">beli</a>
-                        @auth
+                        @else
                         @if (Auth::user()->role == 1)
                         <a href="{{ route('user.buy', ['id'=>$item->kd_brg]) }}" class="btn btn-primary">Edit</a>
+                        @else
+                        <a href="{{ route('user.buy', ['id'=>$item->kd_brg]) }}" class="btn btn-primary">beli</a>
                         @endif
-                        @endauth
+                        @endguest
                     </div>
                 </div>
             </div>
@@ -108,7 +111,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="gambar" class="col-sm-3 col-form-label">Judul Novel</label>
+                        <label for="gambar" class="col-sm-3 col-form-label">Cover Novel</label>
                         <div class="col-sm-8">
                             <input type="file" id="gambar"
                                 class="form-control-file @error('gambar') is-invalid @enderror" name="gambar">
