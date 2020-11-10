@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Items;
+use App\Models\Transaksi;
 use Illuminate\Http\Request;
 
 class ItemsController extends Controller
@@ -123,8 +124,11 @@ class ItemsController extends Controller
      * @param  \App\Models\Items  $items
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Items $items)
+    public function destroy($id)
     {
-        //
+        $del = Items::where('kd_brg', $id)->delete();
+        if ($del) {
+            return redirect()->route('home')->with('success', 'Berhasil Menghapus Buku!');
+        }
     }
 }

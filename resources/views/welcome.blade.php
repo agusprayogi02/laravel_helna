@@ -47,6 +47,7 @@
                         @else
                         @if (Auth::user()->role == 1)
                         <a href="{{ route('admin.edit', ['id'=>$item->kd_brg]) }}" class="btn btn-warning">Edit</a>
+                        <a href="{{ route('admin.destroy', ['id'=>$item->kd_brg]) }}" class="btn btn-danger">Hapus</a>
                         @else
                         <a href="{{ route('user.buy', ['id'=>$item->kd_brg]) }}" class="btn btn-primary">beli</a>
                         @endif

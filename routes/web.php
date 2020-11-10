@@ -24,7 +24,6 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Auth::routes();
 
 // user
-Route::post('/admin/add', [ItemsController::class, 'store'])->name('add_item')->middleware('isUser');
 Route::get('/user/cart', [TransaksiController::class, 'index'])->name('user.cart')->middleware('isUser');
 Route::get('/user/buys/{id}', [TransaksiController::class, 'buys'])->name('user.buy')->middleware('isUser');
 Route::get('/user/cancel/{id}', [TransaksiController::class, 'destroy'])->name('user.cancel')->middleware('isUser');
@@ -33,7 +32,8 @@ Route::get('/user/histori', [TransaksiController::class, 'show'])->name('user.hi
 Route::get('/user/{id}/hapus', [TransaksiController::class, 'hapus'])->name('user.hapus')->middleware('isUser');
 
 // admin
-Route::get('/admin/pesanan', []);
+Route::post('/admin/add', [ItemsController::class, 'store'])->name('add_item')->middleware('isAdmin');
+Route::get('/admin/{id}/delete', [ItemsController::class, 'destroy'])->name('admin.destroy')->middleware('isAdmin');
 Route::get('/admin/{id}/edit', [ItemsController::class, 'edit'])->name('admin.edit')->middleware('isAdmin');
 Route::post('/admin/{id}/update', [ItemsController::class, 'update'])->name('admin.update')->middleware('isAdmin');
 Route::get('/admin/invoice', [TransaksiController::class, 'list'])->name('admin.list');
