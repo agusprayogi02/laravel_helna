@@ -23,7 +23,8 @@
                                         href="{{ route('user.histori') }}">History</a>
                                 </li>
                                 @else
-                                <li><a class="{{ request()->is('user/cart')?'active':'' }}" href="#">Services</a></li>
+                                <li><a class="{{ request()->is('admin/invoice')?'active':'' }}"
+                                        href="{{ route('admin.list') }}">Services</a></li>
                                 @endif
                                 @endguest
 

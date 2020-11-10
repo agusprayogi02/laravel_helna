@@ -150,9 +150,18 @@ class TransaksiController extends Controller
 
     public function delete($id)
     {
-        $item = Items::find($id);
-        if ($item) {
-        } else {
+        $del = Transaksi::where('nomor', $id)->delete();
+        if ($del) {
+            return redirect()->back()->with('success', 'Pesanan Berhasil Cancel!!');
         }
+    }
+
+    public function list()
+    {
+        $data = [
+            'title' => "List Invoices",
+            'data' => Transaksi::all()
+        ];
+        return view('admin.invoice', $data);
     }
 }

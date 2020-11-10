@@ -36,3 +36,5 @@ Route::get('/user/{id}/hapus', [TransaksiController::class, 'hapus'])->name('use
 Route::get('/admin/pesanan', []);
 Route::get('/admin/{id}/edit', [ItemsController::class, 'edit'])->name('admin.edit')->middleware('isAdmin');
 Route::post('/admin/{id}/update', [ItemsController::class, 'update'])->name('admin.update')->middleware('isAdmin');
+Route::get('/admin/invoice', [TransaksiController::class, 'list'])->name('admin.list');
+Route::get('/admin/{id}/cancal', [TransaksiController::class, 'delete'])->name('admin.delete');
